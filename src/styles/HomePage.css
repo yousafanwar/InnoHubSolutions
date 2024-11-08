@@ -1,0 +1,16 @@
+.parallax {
+    height: 500px;
+    background-image: url('../../public/poster.webp'); 
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+  }
+
+  .content {
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+  }
