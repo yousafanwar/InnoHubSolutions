@@ -24,10 +24,14 @@ const Insights = () => {
 
     const fetchData = async () => {
         setOpen(true);
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
-        const result = await response.data.slice(0, 3);
-        setPosts(result);
-        setOpen(false);
+        try {
+            const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+            const result = await response.data.slice(0, 3);
+            setPosts(result);
+            setOpen(false);
+        } catch (error) {
+            console.error(error)
+        }
 
 
     }
@@ -49,42 +53,52 @@ const Insights = () => {
 
 
     return (
-        <Box gap={3} sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 3 }}>
-            <Typography variant='h3'>Get you insights here!</Typography>
-            <Button variant="contained" sx={{ backgroundColor: "#4A4A4F", '&:hover': { backgroundColor: "#5C5C60" } }} onClick={fetchData}>Click here</Button>
-            <Backdrop
-                sx={(theme) => ({ color: 'black', zIndex: theme.zIndex.drawer + 1 })}
-                open={open}
-                onClick={handleClose}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
+        <Box>
 
-            <Box>
-                {posts && posts.map((post, index) => {
-                    return <Card key={index} sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", borderRadius: "8px", transition: "box-shadow 0.3s ease", backgroundColor: "#FFFFFF", boxShadow: "0 4px 8px rgba(128, 128, 128, 0.4), 0 2px 4px rgba(128, 128, 128, 0.3)", cursor: "pointer", margin: "10px" }}>
-                        <CardContent sx={{ flex: 1, width: "100%" }}>
-                            <Grid direction='column' size={{ sm: 6, md: 12, lg: 12 }} sx={{ height: 'auto' }}>
-                                <Typography variant='h5'>Title: {post.title}</Typography>
-                                <Typography variant='body1'>{postId && postId === index + 1 ? post.body : `${post.body.slice(0, 10)}...`}</Typography>
-                            </Grid>
-                        </CardContent>
-                        <CardActions >
-                            <Button onClick={() => { handleReadMore(event, index) }} sx={{
-                                color: "#4A4A4F", backgroundColor: "inherit", border: '0.5mm solid #4A4A4F', '&:hover': {
-                                    backgroundColor: "#4A4A4F", color: "white"
-                                }
-                            }}>Read more</Button>
+            <Grid gap={3} sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: { xs: '60vh', md: '80vh' }, width: "100%", backgroundColor: "#666666" }}>
+                <Typography variant='h3'>Get you insights here!</Typography>
+                <Button sx={{ color: "white", backgroundColor: "inherit", border:"0.5mm solid white", '&:hover': { color: "black", backgroundColor: "white" } }} onClick={fetchData}>Click here</Button>
+            </Grid>
 
 
-                        </CardActions>
 
-                    </Card>
-                })
+            <Grid gap={3} sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 3 }}>
 
-                }
 
-            </Box>
+                <Backdrop
+                    sx={(theme) => ({ color: 'black', zIndex: theme.zIndex.drawer + 1 })}
+                    open={open}
+                    onClick={handleClose}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+
+                <Box>
+                    {posts && posts.map((post, index) => {
+                        return <Card key={index} sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", borderRadius: "8px", transition: "box-shadow 0.3s ease", backgroundColor: "#FFFFFF", boxShadow: "0 4px 8px rgba(128, 128, 128, 0.4), 0 2px 4px rgba(128, 128, 128, 0.3)", cursor: "pointer", margin: "10px" }}>
+                            <CardContent sx={{ flex: 1, width: "100%" }}>
+                                <Grid direction='column' size={{ sm: 6, md: 12, lg: 12 }} sx={{ height: 'auto' }}>
+                                    <Typography variant='h5'>Title: {post.title}</Typography>
+                                    <Typography variant='body1'>{postId && postId === index + 1 ? post.body : `${post.body.slice(0, 10)}...`}</Typography>
+                                </Grid>
+                            </CardContent>
+                            <CardActions >
+                                <Button onClick={() => { handleReadMore(event, index) }} sx={{
+                                    color: "#4A4A4F", backgroundColor: "inherit", border: '0.5mm solid #4A4A4F', '&:hover': {
+                                        backgroundColor: "#4A4A4F", color: "white"
+                                    }
+                                }}>Read more</Button>
+
+
+                            </CardActions>
+
+                        </Card>
+                    })
+
+                    }
+
+                </Box>
+            </Grid>
         </Box>
     )
 }
