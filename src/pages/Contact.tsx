@@ -17,6 +17,10 @@ const Contact = () => {
     };
 
     useEffect(() => {
+        document.title = "Contact";
+    }, [])
+
+    useEffect(() => {
         const validaeForm = () => {
 
             setName(name.replace(/[^a-zA-z]/g, ""));

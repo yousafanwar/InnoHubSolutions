@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {Box, Grid} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -14,6 +14,10 @@ const Solutions = () => {
   const [fadeStates, setFadeStates] = useState(
     items.map(() => ({ fadeIn: false, fadeOut: true }))
   );
+
+  useEffect(() => {
+    document.title = "Solutions";
+}, [])
 
   const handleMouseEnter = (index: number) => {
     setFadeStates((prev) =>

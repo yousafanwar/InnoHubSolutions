@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -32,9 +32,11 @@ const Insights = () => {
         } catch (error) {
             console.error(error)
         }
-
-
     }
+
+    useEffect(() => {
+        document.title = "Insights";
+    }, [])
 
     const handleReadMore = (event: any, index: number) => {
         posts && posts.forEach(element => {

@@ -20,6 +20,9 @@ const HomePage = () => {
   const observedRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    
+      document.title = "InnoHub Solutions";
+
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setImgTranslateX("0");
