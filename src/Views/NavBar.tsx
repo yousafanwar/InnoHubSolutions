@@ -28,7 +28,7 @@ const NavBar = () => {
         if (page === 'Home') {
             navigate(`/`);
         } else {
-            navigate(`/${page.toLowerCase()}`);
+            navigate(`/${page}`);
         }
     };
 

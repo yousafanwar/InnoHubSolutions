@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { FormControl, InputLabel, Input, Typography, Box, Select, MenuItem, Button, FormHelperText } from '@mui/material';
+import { FormControl, InputLabel, Input, Typography, Box, Select, MenuItem, Button, FormHelperText, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid2';
+import { getFormSubmissionInfo } from 'react-router-dom/dist/dom';
 
 
 const Contact = () => {
@@ -11,6 +12,7 @@ const Contact = () => {
     const [request, setRequest] = useState<string>('');
     const [isFilled, setIsFilled] = useState<boolean>(true);
     const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
+    const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
 
     const handleChange = (event: any) => {
         setRequest(event.target.value as string);
@@ -24,7 +26,7 @@ const Contact = () => {
             if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 setIsValidEmail(false);
             }
-            let value = inputContact.replace(/\D/g, ""); 
+            let value = inputContact.replace(/\D/g, "");
             if (value.length > 0 && value.length <= 2) {
                 value = `+${value}`;
             } else if (value.length > 0 && value.length <= 6) {
@@ -33,7 +35,7 @@ const Contact = () => {
                 value = `+${value.slice(0, 2)}-${value.slice(2, 6)}-${value.slice(6, 12)}`;
             }
             setInputContact(value);
-            if (name !== "" && email !== "" && inputContact !== "" && request !== "") {
+            if (name !== "" && isValidEmail === false && inputContact !== "" && request !== "") {
                 setIsFilled(false);
             }
         }
@@ -47,6 +49,7 @@ const Contact = () => {
         setInputContact("");
         setRequest("");
         setIsFilled(true);
+        setFormSubmitted(true);
     }
 
     return (
@@ -54,7 +57,7 @@ const Contact = () => {
             <Grid sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <Typography variant='h3'>Fill out the form and lets get connected</Typography>
             </Grid>
-            <Grid gap={8} sx={{ padding: "15px", borderRadius: "8px", transition: "box-shadow 0.3s ease", backgroundColor: "#FFFFFF", boxShadow: "0 4px 8px rgba(128, 128, 128, 0.4), 0 2px 4px rgba(128, 128, 128, 0.3)" }}>
+            <Grid gap={8} sx={{ width: { xs: "100%", sm: "400px", md: "800px" }, padding: "15px", borderRadius: "8px", transition: "box-shadow 0.3s ease", backgroundColor: "#FFFFFF", boxShadow: "0 4px 8px rgba(128, 128, 128, 0.4), 0 2px 4px rgba(128, 128, 128, 0.3)" }}>
                 <FormControl fullWidth required sx={{ marginBottom: 3 }}>
                     <InputLabel htmlFor="inputName">Name</InputLabel>
                     <Input value={name} onChange={(e) => { setName(e.target.value) }} aria-describedby="my-helper-text" />
@@ -88,6 +91,10 @@ const Contact = () => {
                 <FormControl fullWidth required>
                     <Button variant="contained" onClick={handleSubmission} disabled={isFilled} sx={{ color: "white", backgroundColor: "#4A4A4F", '&:hover': { backgroundColor: "#5C5C60" } }}>Submit</Button>
                 </FormControl>
+                {formSubmitted &&
+                    <Alert severity="success">Form has been submitted successfully</Alert>
+                }
+
             </Grid>
         </Box>
 
