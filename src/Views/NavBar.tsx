@@ -125,7 +125,7 @@ const NavBar = () => {
                                 </Button>
                             ))}
                         </Box>
-                        <Button onClick={() => { navigate("/solutions") }} sx={{
+                        <Button onClick={() => { navigate("/contact") }} sx={{
                             backgroundColor: "#4A4A4F", color: 'white', '&:hover': {
                                 backgroundColor: "#5C5C60",
                             }
